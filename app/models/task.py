@@ -19,7 +19,7 @@ class Task(Base):
         default="No description",
         server_default="No description",
     )
-    user_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"))
+    user_id: Mapped[UUID | None] = mapped_column(ForeignKey("users.id"))
     project_id: Mapped[UUID | None] = mapped_column(ForeignKey("projects.id"), nullable=True)
     user: Mapped["User"] = relationship(back_populates="tasks")
     goal: Mapped["Goal"] = relationship(back_populates="tasks")

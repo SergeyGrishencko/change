@@ -7,6 +7,7 @@ from app.models.base import Base
 
 if TYPE_CHECKING:
     from app.models.task import Task
+    from app.models.goal import Goal
     from app.models.users_projects_association import UserProjectAssociation
 
 class Project(Base):
@@ -18,7 +19,7 @@ class Project(Base):
         server_default="No project description",
     )
     creator_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"))
-    goal_id: Mapped[UUID] = mapped_column(ForeignKey("goals.id"))
+    goal: Mapped["Goal"] = relationship(back_populates="goals")
     tasks: Mapped[list["Task"]] = relationship(back_populates="project")
 
     executors: Mapped[list["UserProjectAssociation"]] = relationship(

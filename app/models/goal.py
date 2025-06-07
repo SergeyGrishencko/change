@@ -14,8 +14,8 @@ class Goal(Base):
 
     name: Mapped[str] = mapped_column(Text)
 
-    user_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"))
-    project_id: Mapped[UUID] = mapped_column(ForeignKey("projects.id"))
+    user_id: Mapped[UUID | None] = mapped_column(ForeignKey("users.id"))
+    project_id: Mapped[UUID | None] = mapped_column(ForeignKey("projects.id"))
 
     user: Mapped["User"] = relationship(back_populates="goals")
     tasks: Mapped[list["Task"]] = relationship(back_populates="goal")
