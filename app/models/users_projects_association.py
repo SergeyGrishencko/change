@@ -3,11 +3,11 @@ from sqlalchemy import UniqueConstraint, ForeignKey
 from typing import TYPE_CHECKING
 from uuid import UUID
 
-from app.models.base import Base
+from .base import Base
 
 if TYPE_CHECKING:
-    from app.models.user import User
-    from app.models.project import Project
+    from .user import User
+    from .project import Project
 
 class UserProjectAssociation(Base):
     __tablename__ = "user_project_association"
@@ -23,5 +23,5 @@ class UserProjectAssociation(Base):
     user_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"))
     project_id: Mapped[UUID] = mapped_column(ForeignKey("projects.id"))
 
-    user: Mapped["User"] = relationship(back_populates="executors")
-    project: Mapped["Project"] = relationship(back_populates="projects")
+    user: Mapped["Project"] = relationship(back_populates="executors")
+    project: Mapped["User"] = relationship(back_populates="projects")
