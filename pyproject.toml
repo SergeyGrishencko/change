@@ -1,0 +1,39 @@
+[project]
+name = "change"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "SergeyGrishencko",email = "grisenchen@gmail.com"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi[all] (>=0.116.1,<0.117.0)",
+    "sqlalchemy (>=2.0.43,<3.0.0)",
+    "alembic (>=1.16.5,<2.0.0)",
+    "asyncpg (>=0.30.0,<0.31.0)"
+]
+
+[tool.poetry]
+package-mode = false
+
+[dependency-groups]
+dev = [
+    "pytest (>=8.4.2,<9.0.0)",
+    "ruff (>=0.16.10,<0.17.0)",
+    "mypy (>=2.4.0,<3.0.0)"
+]
+
+
+[tool.mypy]
+python_version = "3.12"
+files = ["src", "tests"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
