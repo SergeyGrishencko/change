@@ -1,0 +1,79 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ruff-check:
+    name: Ruff-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: snok/install-poetry@v1
+        with:
+          version: 2.2.0
+          virtualenvs-in-project: true
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: poetry
+
+      - name: Install dependencies
+        run: poetry install --with dev --no-interaction
+
+      - name: Run ruff
+        run: poetry run ruff check .
+
+  mypy-check:
+    name: Mypy-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: snok/install-poetry@v1
+        with:
+          version: 2.2.0
+          virtualenvs-in-project: true
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: poetry
+
+      - name: Install dependencies
+        run: poetry install --with dev --no-interaction
+
+      - name: Run mypy
+        run: poetry run mypy
+
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: snok/install-poetry@v1
+        with:
+          version: 2.2.0
+          virtualenvs-in-project: true
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: poetry
+
+      - name: Install dependencies
+        run: poetry install --with dev --no-interaction
+
+      - name: Run tests
+        run: poetry run pytest
